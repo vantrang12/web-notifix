@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ action }} thông báo</h2>
+  <form method="post" class="form">
+    <label>Nội dung
+      <textarea name="content" rows="6" required>{{ notif.content if notif else '' }}</textarea>
+    </label>
+    <label>Ghi chú
+      <textarea name="note" rows="3">{{ notif.note if notif else '' }}</textarea>
+    </label>
+    <button type="submit">{{ action }}</button>
+    <a href="{{ url_for('notifications') }}" class="btn secondary">Hủy</a>
+  </form>
+{% endblock %}

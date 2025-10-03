@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Chi tiết user{% endblock %}
+{% block content %}
+  <h2>Chi tiết #{{ user.id }}</h2>
+  <p><strong>Username:</strong> {{ user.username }}</p>
+  <p><strong>Password:</strong> {{ user.password }}</p>
+  <p><strong>Full name:</strong> {{ user.fullname }}</p>
+  <p><strong>Description:</strong></p>
+  <div class="card">{{ user.description }}</div>
+  <p><strong>Role:</strong> {{ user.role }}</p>
+  <p><a href="{{ url_for('users') }}">Quay lại</a></p>
+{% endblock %}

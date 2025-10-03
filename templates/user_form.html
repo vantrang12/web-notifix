@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ action }} user</h2>
+  <form method="post" class="form">
+    <label>Username
+      <input name="username" required value="{{ user.username if user else '' }}">
+    </label>
+    <label>Password
+      <input name="password" {% if action=="Thêm" %}required{% endif %} type="text" placeholder="{% if action=='Sửa' %}Để trống nếu không đổi{% endif %}">
+    </label>
+    <label>Full name
+      <input name="fullname" value="{{ user.fullname if user else '' }}">
+    </label>
+    <label>Description
+      <textarea name="description" rows="3">{{ user.description if user else '' }}</textarea>
+    </label>
+    <label>Role
+      <select name="role">
+        <option value="user" {% if user and user.role=='user' %}selected{% endif %}>user</option>
+        <option value="admin" {% if user and user.role=='admin' %}selected{% endif %}>admin</option>
+      </select>
+    </label>
+    <button type="submit">{{ action }}</button>
+    <a href="{{ url_for('users') }}" class="btn secondary">Hủy</a>
+  </form>
+{% endblock %}

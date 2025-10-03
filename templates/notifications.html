@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Danh sách thông báo{% endblock %}
+{% block content %}
+  <h2>Danh sách thông báo</h2>
+  {% if session.get('role') == 'admin' %}
+    <p><a class="btn" href="{{ url_for('notification_add') }}">Thêm thông báo</a></p>
+  {% endif %}
+  <ul class="list">
+    {% for n in notifications %}
+      <li>
+        <a href="{{ url_for('notification_detail', notification_id=n.id) }}">
+          #{{ n.id }} — {{ n.content[:80] }}{% if n.content|length>80 %}...{% endif %}
+        </a>
+        {% if session.get('role') == 'admin' %}
+          <a class="small" href="{{ url_for('notification_edit', notification_id=n.id) }}">Sửa</a>
+          <form class="inline" method="post" action="{{ url_for('notification_delete', notification_id=n.id) }}" onsubmit="return confirm('Xóa thông báo #{{ n.id }}?');">
+            <button type="submit" class="small danger">Xóa</button>
+          </form>
+        {% endif %}
+      </li>
+    {% else %}
+      <li>Không có thông báo nào.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

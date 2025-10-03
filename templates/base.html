@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Notifix - {% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1 class="logo"><a href="{{ url_for('index') }}">Notifix</a></h1>
+      <nav>
+        {% if session.get('user_id') %}
+          <span>Xin chào, {{ session.get('username') }} ({{ session.get('role') }})</span>
+          <a href="{{ url_for('notifications') }}">Thông báo</a>
+          {% if session.get('role') == 'admin' %}
+            <a href="{{ url_for('users') }}">Quản lý Users</a>
+          {% endif %}
+          <a href="{{ url_for('logout') }}">Đăng xuất</a>
+        {% else %}
+          <a href="{{ url_for('login') }}">Đăng nhập</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash">
+          {% for category, msg in messages %}
+            <div class="alert {{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Notifix &copy; 2025
+    </div>
+  </footer>
+</body>
+</html>
